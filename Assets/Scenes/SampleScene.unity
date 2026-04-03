@@ -317,7 +317,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1619578727}
-  - component: {fileID: 1619578728}
+  - component: {fileID: 1619578729}
+  - component: {fileID: 1619578730}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -340,7 +341,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1619578728
+--- !u!114 &1619578729
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,11 +350,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 1619578726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 495b4fe640a53c84db109a61e570f50b, type: 3}
+  m_Script: {fileID: 11500000, guid: 87cd554fa81a75b4bb6d95cdd3f96501, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SDMS_UnitTest
-  IsLoadTest: 1
+  m_EditorClassIdentifier: Assembly-CSharp::JsonTreeView
   _filePath: D:\workspace\Program\Unity\SaveDataTest\Assets\SaveDataManagerSystem\SampleSaveData\sample.json
+  jsonInput: "{\r\n  \"SystemData\": {\r\n    \"PlayerName\": \"hoge\",\r\n    \"Volume\":
+    \"10\",\r\n    \"DisplaySize\": {\r\n      \"X\": \"1920\",\r\n      \"Y\": \"1080\"\r\n   
+    }\r\n  },\r\n  \"GameData\": {\r\n    \"SaveSlot\": [\r\n      {\r\n        \"SlotID\":
+    \"Slot1\",\r\n        \"PlayerData\": {\r\n          \"Turn\": \"0\",\r\n         
+    \"Money\": \"100\"\r\n        },\r\n        \"HeroineData\": [\r\n          {\r\n           
+    \"Name\": \"Heroine1\"\r\n          },\r\n          {\r\n            \"Name\":
+    \"Heroine2\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"SlotID\":
+    \"Slot2\",\r\n        \"PlayerData\": {\r\n          \"Turn\": \"0\",\r\n         
+    \"Money\": \"100\"\r\n        },\r\n        \"HeroineData\": [\r\n          {\r\n           
+    \"Name\": \"Heroine1\"\r\n          },\r\n          \"test\",\r\n          4\r\n       
+    ]\r\n      }\r\n    ]\r\n  }\r\n}"
+  viewModelDataContext: {fileID: 1619578730}
+--- !u!114 &1619578730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619578726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc735255a49c359469df037a82623fb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JsonTreeViewModel
+  jsonTreeView: {fileID: 1619578729}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

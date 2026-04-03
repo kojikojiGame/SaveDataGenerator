@@ -5,8 +5,8 @@
     "DisplaySize": {
       "X": "1920",
       "Y": "1080"
-      }
-    },
+    }
+  },
   "GameData": {
     "SaveSlot": [
       {
@@ -34,9 +34,8 @@
           {
             "Name": "Heroine1"
           },
-          {
-            "Name": "Heroine2"
-          }
+          "test",
+          4
         ]
       }
     ]
