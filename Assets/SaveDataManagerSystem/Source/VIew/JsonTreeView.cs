@@ -29,6 +29,7 @@ namespace SaveDataManagerSystem.View
         public void OnReload()
         {
             viewModelDataContext.OnReload();
+            jsonInput = viewModelDataContext.JsonInput;
         }
 
         /// <summary>
