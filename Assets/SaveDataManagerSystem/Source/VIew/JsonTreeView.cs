@@ -9,8 +9,10 @@ namespace SaveDataManagerSystem.View
         /// 保存先ファイルパス
         /// </summary>
         [SerializeField]
-        public string _filePath = string.Empty;
+        private string _filePath = string.Empty;
 
+        public static string FilePath = string.Empty;
+        
         /// <summary>
         /// 実際に編集されるjsonデータ
         /// </summary>
@@ -38,6 +40,18 @@ namespace SaveDataManagerSystem.View
         public void OnSave()
         {
             viewModelDataContext.OnSave(jsonInput);
+        }
+
+        /// <summary>
+        /// static プロパティの半影
+        /// </summary>
+        /// <remarks>
+        /// Inspectorで値を変更した瞬間に反映（エディタ実行中も有効）
+        /// </remarks>
+        private void OnValidate()
+        {
+            
+            FilePath = _filePath;
         }
     }
 }
