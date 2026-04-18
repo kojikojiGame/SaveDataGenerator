@@ -35,7 +35,7 @@ namespace SaveDataManagerSystem.ViewModel
         public void OnReload()
         {
             object jsonData = new();
-            _dataLoader.LoadFromFilePath(jsonTreeView._filePath, ref jsonData);
+            _dataLoader.LoadFromFilePath(JsonTreeView.FilePath, ref jsonData);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace SaveDataManagerSystem.ViewModel
         /// <param name="jsonData">保存対象のjsonのデータ</param>
         public void OnSave(string jsonData)
         {
-            _dataSaver.Save(jsonTreeView._filePath, jsonData);
+            _dataSaver.Save(jsonData);
         }
 
 
