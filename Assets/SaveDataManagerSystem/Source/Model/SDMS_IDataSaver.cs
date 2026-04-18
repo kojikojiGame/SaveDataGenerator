@@ -7,10 +7,9 @@ namespace SaveDataManagerSystem.Model
     public interface SDMS_IDataSaver
     {
         /// <summary>
-        /// <paramref name="filePath"/>に <paramref name="jsonData"/> のセーブを行う
+        /// <paramref name="jsonData"/> のセーブを行う
         /// </summary>
-        /// <param name="filePath">保存先ファイルパス</param>
         /// <param name="jsonData">実際の保存対象のjson</param>
-        public void Save(string filePath, string jsonData);
+        public void Save(string jsonData);
     }
 }

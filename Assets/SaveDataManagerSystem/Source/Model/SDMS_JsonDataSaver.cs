@@ -7,10 +7,9 @@ namespace SaveDataManagerSystem.Model
     public sealed class SDMS_JsonDataSaver : MonoBehaviour, SDMS_IDataSaver
     {
         /// <inheritdoc cref=" SDMS_IDataSaver.Save"/>
-        public void Save(string filePath, string jsonData)
+        public void Save(string jsonData)
         {
-            // シリアル化してファイル保存
-            File.WriteAllText(filePath, jsonData);
+            SaveDataUtility.Save(jsonData);
         }
     }
 }
