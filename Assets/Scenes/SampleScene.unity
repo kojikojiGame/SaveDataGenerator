@@ -308,6 +308,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1170102270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1170102271}
+  - component: {fileID: 1170102272}
+  m_Layer: 0
+  m_Name: GameTestObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1170102271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170102270}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1170102272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170102270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 495b4fe640a53c84db109a61e570f50b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveDataManagerSystem.MockTest.SDMS_UnitTest
+  _isLoadTest: 1
+  _saveData:
+    SystemData:
+      PlayerName: 
+      Volume: 0
+      DisplaySize: {x: 0, y: 0}
+    GameData:
+      SlotData: []
 --- !u!1 &1619578726
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +372,7 @@ GameObject:
   - component: {fileID: 1619578729}
   - component: {fileID: 1619578730}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TreeVIewObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -363,7 +415,7 @@ MonoBehaviour:
     \"Heroine2\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"SlotID\":
     \"Slot2\",\r\n        \"PlayerData\": {\r\n          \"Turn\": \"0\",\r\n         
     \"Money\": \"100\"\r\n        },\r\n        \"HeroineData\": [\r\n          {\r\n           
-    \"Name\": \"Heroine1\"\r\n          },\r\n          \"test\",\r\n          4\r\n       
+    \"Name\": \"Heroine1\"\r\n          },\r\n          \"test\",\r\n          100\r\n       
     ]\r\n      }\r\n    ]\r\n  }\r\n}"
   viewModelDataContext: {fileID: 1619578730}
 --- !u!114 &1619578730
@@ -386,3 +438,4 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 1619578727}
+  - {fileID: 1170102271}
