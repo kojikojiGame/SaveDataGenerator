@@ -1,0 +1,41 @@
+{
+  "SystemData": {
+    "PlayerName": "hoge",
+    "Volume": "10",
+    "DisplaySize": {
+      "X": "1920",
+      "Y": "1080"
+    }
+  },
+  "GameData": {
+    "SlotData": [
+      {
+        "SlotID": "Slot1",
+        "PlayerData": {
+          "Turn": "0",
+          "Money": "100"
+        },
+        "HeroineData": [
+          {
+            "Name": "Heroine1"
+          },
+          {
+            "Name": "Heroine2"
+          }
+        ]
+      },
+      {
+        "SlotID": "Slot2",
+        "PlayerData": {
+          "Turn": "0",
+          "Money": "100"
+        },
+        "HeroineData": [
+          {
+            "Name": "Heroine1"
+          }
+        ]
+      }
+    ]
+  }
+}
