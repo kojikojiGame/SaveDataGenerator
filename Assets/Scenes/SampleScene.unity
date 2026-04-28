@@ -353,13 +353,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveDataManagerSystem.MockTest.SDMS_UnitTest
   _isLoadTest: 1
-  _saveData:
-    SystemData:
-      PlayerName: 
-      Volume: 0
-      DisplaySize: {x: 0, y: 0}
-    GameData:
-      SlotData: []
 --- !u!1 &1619578726
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,15 +401,14 @@ MonoBehaviour:
   _filePath: D:\workspace\Program\Unity\SaveDataTest\Assets\SaveDataManagerSystem\SampleSaveData\sample.json
   jsonInput: "{\r\n  \"SystemData\": {\r\n    \"PlayerName\": \"hoge\",\r\n    \"Volume\":
     \"10\",\r\n    \"DisplaySize\": {\r\n      \"X\": \"1920\",\r\n      \"Y\": \"1080\"\r\n   
-    }\r\n  },\r\n  \"GameData\": {\r\n    \"SaveSlot\": [\r\n      {\r\n        \"SlotID\":
+    }\r\n  },\r\n  \"GameData\": {\r\n    \"SlotData\": [\r\n      {\r\n        \"SlotID\":
     \"Slot1\",\r\n        \"PlayerData\": {\r\n          \"Turn\": \"0\",\r\n         
     \"Money\": \"100\"\r\n        },\r\n        \"HeroineData\": [\r\n          {\r\n           
     \"Name\": \"Heroine1\"\r\n          },\r\n          {\r\n            \"Name\":
     \"Heroine2\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"SlotID\":
     \"Slot2\",\r\n        \"PlayerData\": {\r\n          \"Turn\": \"0\",\r\n         
     \"Money\": \"100\"\r\n        },\r\n        \"HeroineData\": [\r\n          {\r\n           
-    \"Name\": \"Heroine1\"\r\n          },\r\n          \"test\",\r\n          100\r\n       
-    ]\r\n      }\r\n    ]\r\n  }\r\n}"
+    \"Name\": \"Heroine1\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}"
   viewModelDataContext: {fileID: 1619578730}
 --- !u!114 &1619578730
 MonoBehaviour:
