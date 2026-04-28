@@ -44,6 +44,26 @@ namespace SaveDataManagerSystem
         }
 
         /// <summary>
+        /// セーブデータを保存する
+        /// </summary>
+        /// <param name="saveData">保存対象のデータ</param>
+        /// <typeparam name="T">セーブデータのクラスタイプ</typeparam>
+        /// <returns>実行の成功失敗を返却</returns>
+        public static bool TrySave<T>(object saveData) where T : class
+        {
+            if (saveData is T data)
+            {
+                _saveData = data;
+                Save();
+                return true;
+            }
+
+            Debug.LogError("Failed Cast Type. At : SaveDataManagerSystem.SaveDataUtility.TrySave()");
+
+            return false;
+        }
+
+        /// <summary>
         /// 書き込んだデータをセーブ(<see cref="SaveDataUtility.SaveData"/> からセーブ処理を行う)
         /// </summary>
         public static void Save() 
