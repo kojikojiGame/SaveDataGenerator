@@ -408,7 +408,15 @@ MonoBehaviour:
     \"Heroine2\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"SlotID\":
     \"Slot2\",\r\n        \"PlayerData\": {\r\n          \"Turn\": \"0\",\r\n         
     \"Money\": \"100\"\r\n        },\r\n        \"HeroineData\": [\r\n          {\r\n           
-    \"Name\": \"Heroine1\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}"
+    \"Name\": 3\r\n          },\r\n          {\r\n            \"Name\": 3\r\n         
+    },\r\n          {\r\n            \"Name\": 3\r\n          },\r\n          {\r\n           
+    \"Name\": 3\r\n          },\r\n          {\r\n            \"Name\": 3\r\n         
+    },\r\n          {\r\n            \"Name\": 3\r\n          },\r\n          {\r\n           
+    \"Name\": 3\r\n          },\r\n          {\r\n            \"Name\": 3\r\n         
+    },\r\n          {\r\n            \"Name\": 3\r\n          },\r\n          {\r\n           
+    \"Name\": 3\r\n          },\r\n          {\r\n            \"Name\": 3\r\n         
+    },\r\n          {\r\n            \"Name\": 3\r\n          },\r\n          {\r\n           
+    \"Name\": 3\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}"
   viewModelDataContext: {fileID: 1619578730}
 --- !u!114 &1619578730
 MonoBehaviour:
