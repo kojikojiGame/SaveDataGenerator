@@ -67,7 +67,7 @@ namespace SaveDataManagerSystem.View
                     && t.Parent is not JArray)
                     .Select(x => x.Path).ToArray();
 
-                DeprecatedTreeSettingsDialog.ShowWindow(keys, Deprecate);
+                DeprecatedTreeSettingsDialog.ShowWindow(keys, Deprecate, jsonTreeView.BindingMasterDataFilePath);
             }
         }
 

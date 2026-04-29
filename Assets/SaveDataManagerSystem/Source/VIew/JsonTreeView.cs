@@ -12,7 +12,15 @@ namespace SaveDataManagerSystem.View
         private string _filePath = string.Empty;
 
         public static string FilePath = string.Empty;
-        
+
+        /// <summary>
+        /// バインディングされたMasterデータの保存先ファイルパス
+        /// </summary>
+        [SerializeField]
+        private string _bindingMasterDataFilePath = string.Empty;
+
+        public string BindingMasterDataFilePath => _bindingMasterDataFilePath;
+
         /// <summary>
         /// 実際に編集されるjsonデータ
         /// </summary>
