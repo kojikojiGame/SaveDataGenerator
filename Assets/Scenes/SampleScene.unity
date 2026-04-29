@@ -399,6 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JsonTreeView
   _filePath: D:\workspace\Program\Unity\SaveDataTest\Assets\SaveDataManagerSystem\SampleSaveData\sample.json
+  _bindingMasterDataFilePath: D:\workspace\Program\Unity\SaveDataTest\Assets\SaveDataManagerSystem\SampleSaveData\bindData.json
   jsonInput: "{\r\n  \"SystemData\": {\r\n    \"PlayerName\": \"hoge\",\r\n    \"Volume\":
     \"10\",\r\n    \"DisplaySize\": {\r\n      \"X\": \"1920\",\r\n      \"Y\": \"1080\"\r\n   
     }\r\n  },\r\n  \"GameData\": {\r\n    \"SlotData\": [\r\n      {\r\n        \"SlotID\":

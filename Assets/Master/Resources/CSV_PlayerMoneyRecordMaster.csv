@@ -1,0 +1,14 @@
+Id,TextKeyName
+1,PlayerMnyRc_WaterBill
+2,PlayerMnyRc_ElectricityBill
+3,PlayerMnyRc_GasBill
+4,PlayerMnyRc_FoodExpenses
+5,PlayerMnyRc_PTalkUsageFees
+6,PlayerMnyRc_PTalkSuperChatFees
+7,PlayerMnyRc_SupportMoney
+8,PlayerMnyRc_DatePayments
+9,PlayerMnyRc_PurchasesOfConsumables
+10,PlayerMnyRc_HighvalueTransactions
+11,PlayerMnyRc_FacilityUse
+12,PlayerMnyRc_LotteryTicketPurchases
+13,PlayerMnyRc_SettlementFees

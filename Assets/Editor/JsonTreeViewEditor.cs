@@ -48,7 +48,81 @@ namespace SaveDataManagerSystem.View
             root.Add(new Button(RefreshTree) { text = "Edit", style = { height = 30, marginTop = 10 } });
             root.Add(_treeContainer);
             root.Add(new Button(jsonTreeView.OnSave) { text = "Save", style = { height = 30, marginTop = 10 } });
+            root.Add(new Button(() => OnDeprecate()) { text = "Deprecate", style = { height = 30, marginTop = 10 } });
             return root;
+        }
+
+        private void OnDeprecate()
+        {
+            if (_rootJToken is null)
+            {
+                RefreshTree();
+            }
+
+            if (_rootJToken is JObject jobject)
+            {
+                // すべてのキーをリストで取得
+                var keys = jobject.Descendants()
+                    .Where(t => (t.Type == JTokenType.Object || t.Type == JTokenType.Array)
+                    && t.Parent is not JArray)
+                    .Select(x => x.Path).ToArray();
+
+                DeprecatedTreeSettingsDialog.ShowWindow(keys, Deprecate, jsonTreeView.BindingMasterDataFilePath);
+            }
+        }
+
+        public void Deprecate(string path, int number)
+        {
+            if(number == 0)
+            {
+                Debug.LogError($"要素数が{number}です。");
+            }
+
+
+            if (_rootJToken is JObject jobject)
+            {
+                var property = jobject.Descendants()
+                    .OfType<JProperty>()
+                    .FirstOrDefault(t => t.Path == path);
+
+                if (property != null)
+                {
+                    // JProperty の中身（Value）が配列 (JArray) か確認
+                    if (property.Value is JArray jArray)
+                    {
+                        // 最初の要素をコピー元にする
+                        var firstItem = jArray.FirstOrDefault();
+                        if (firstItem != null)
+                        {
+                            if (jArray.Count < number)
+                            {
+                                for (int i = jArray.Count; i < number; i++)
+                                {
+                                    // 参照ではなく複製(DeepClone)を追加しないと同じ実体を指してしまう
+                                    jArray.Add(firstItem.DeepClone());
+                                }
+                            }
+                            else
+                            {
+                                var dist = jArray.Count - number;
+
+                                for (int i =  0; i < dist; i++)
+                                {
+                                    jArray.Last.Remove();
+                                }
+                            }
+                        }
+                    }
+
+                    UpdateOriginalJson();
+                    RefreshTree();
+                }
+                else
+                {
+                    Debug.LogError($"{path}が見つかりません。");
+                }
+            }
+
         }
 
         void RefreshTree()
@@ -114,9 +188,9 @@ namespace SaveDataManagerSystem.View
                 else
                 {
                     var valueField = new TextField { value = token.ToString(), style = { flexGrow = 1, marginRight = 5 } };
-                    valueField.RegisterValueChangedCallback(evt =>
+                    valueField.RegisterCallback<FocusOutEvent>(evt =>
                     {
-                        if (TryUpdateValue(token, evt.newValue))
+                        if (TryUpdateValue(token, valueField.value))
                             UpdateOriginalJson();
                     });
                     row.Add(valueField);
@@ -144,13 +218,31 @@ namespace SaveDataManagerSystem.View
         // --- 以下、補助メソッド (以前と同様) ---
         VisualElement CreateKeyElement(JToken token, string name)
         {
-            if (token.Parent is JProperty prop)
+            // 配列の要素（[0], [1]など）は名前変更できないように制限
+            bool isArrayItem = token.Parent is JArray;
+
+            if (isArrayItem)
             {
-                var f = new TextField { value = name, style = { width = KeyWidth, marginRight = 5 } };
-                f.RegisterValueChangedCallback(evt => { RenameProperty(prop, evt.newValue); UpdateOriginalJson(); RefreshTree(); });
-                return f;
+                return new Label(name) { style = { width = KeyWidth, unityTextAlign = TextAnchor.MiddleLeft } };
             }
-            return new Label(name) { style = { width = KeyWidth, marginRight = 5, unityFontStyleAndWeight = FontStyle.Bold } };
+            else
+            {
+                var keyField = new TextField { value = name, style = { width = KeyWidth } };
+
+                // 入力完了時に名前を付け替える
+                keyField.RegisterCallback<FocusOutEvent>(evt =>
+                {
+                    string newName = keyField.value;
+                    if (name != newName && !string.IsNullOrEmpty(newName))
+                    {
+                        RenameProperty(token, newName);
+                        UpdateOriginalJson();
+                        RefreshTree(); // 構造が変わるため再描画が必要
+                    }
+                });
+
+                return keyField;
+            }
         }
 
         bool TryUpdateValue(JToken token, string val)
@@ -183,13 +275,25 @@ namespace SaveDataManagerSystem.View
             }
         }
 
-        void RenameProperty(JProperty property, string newName)
+        void RenameProperty(JToken token, string newName)
         {
-            if (string.IsNullOrEmpty(newName) || property.Name == newName) return;
-            JObject parent = (JObject)property.Parent;
-            if (parent == null || parent.ContainsKey(newName)) return;
-            property.AddAfterSelf(new JProperty(newName, property.Value));
-            property.Remove();
+            // JTokenの親がJPropertyであることを確認（JObject直下の場合）
+            if (token.Parent is JProperty property)
+            {
+                var parentObject = property.Parent as JObject;
+                if (parentObject != null)
+                {
+                    // すでに同名のキーがある場合は実行しない（上書き防止）
+                    if (parentObject.ContainsKey(newName))
+                    {
+                        Debug.LogWarning($"Key '{newName}' already exists.");
+                        return;
+                    }
+
+                    // 新しい名前でプロパティを追加し、古いものを消す
+                    property.Replace(new JProperty(newName, property.Value));
+                }
+            }
         }
 
         void AddControlButtons(VisualElement row, JToken token, JObject obj = null, JArray arr = null)
@@ -200,9 +304,26 @@ namespace SaveDataManagerSystem.View
                     () =>
                     {
                         if (obj != null)
-                            obj.Add(MakeUniqueName(obj, "NewKey"), "");
-                        else
-                            arr.Add("");
+                        {
+                            // オブジェクトへの追加（前回の回答通り）
+                            string baseName = (token is JProperty p) ? p.Name : "NewKey";
+                            obj.Add(MakeUniqueName(obj, baseName), "");
+                        }
+                        else if (arr != null)
+                        {
+                            // --- 修正箇所：配列への追加 ---
+                            if (arr.Count > 0)
+                            {
+                                // 0番目の要素が存在すれば、それを複製して追加
+                                arr.Add(arr[0].DeepClone());
+                            }
+                            else
+                            {
+                                // 配列が空ならデフォルトとして空文字（または適切な初期値）を追加
+                                arr.Add("");
+                            }
+                            // ----------------------------
+                        }
                         UpdateOriginalJson();
                         RefreshTree();
                     })
@@ -217,9 +338,36 @@ namespace SaveDataManagerSystem.View
                     () =>
                     {
                         if (token.Parent is JProperty p)
+                        {
+                            // 1. まず、削除対象の親が「配列の0番目の要素（JObject）」かどうかを確認
+                            // path の例: Root.MyArray[0].MyProperty
+                            var parentObject = p.Parent as JObject;
+                            var grandParentArray = parentObject?.Parent as JArray;
+
+                            // 0番目の要素内のプロパティが削除されようとしている場合
+                            if (grandParentArray != null && grandParentArray.IndexOf(parentObject) == 0)
+                            {
+                                string propertyName = p.Name;
+
+                                // 要素1以降のすべてのJObjectから、同じ名前のプロパティを削除
+                                for (int i = 1; i < grandParentArray.Count; i++)
+                                {
+                                    if (grandParentArray[i] is JObject targetObj)
+                                    {
+                                        targetObj.Property(propertyName)?.Remove();
+                                    }
+                                }
+                            }
+
+                            // 2. 本人（0番目のプロパティ）を削除
                             p.Remove();
+                        }
                         else
+                        {
+                            // 通常の削除
                             token.Remove();
+                        }
+
                         UpdateOriginalJson();
                         RefreshTree();
                     })
@@ -233,20 +381,17 @@ namespace SaveDataManagerSystem.View
 
         private string MakeUniqueName(JObject obj, string candidate, int? count = null)
         {
-            var isContainsKey = count == null
-                ? obj.ContainsKey($"{candidate}")
-                : obj.ContainsKey($"{candidate}{count}");
+            string suffix = count == null ? "" : count.ToString();
+            string candidateName = $"{candidate}{suffix}";
 
-            var candidateName = count == null ? $"{candidate}" : $"{candidate}{count}";
-
-            if (isContainsKey)
+            if (obj.ContainsKey(candidateName))
             {
-                candidateName = MakeUniqueName(obj, candidateName, count++ ?? 0);
+                // 次の数値を試す
+                return MakeUniqueName(obj, candidate, (count ?? 0) + 1);
             }
 
             return candidateName;
         }
-
         void UpdateOriginalJson()
         {
             serializedObject.Update();
