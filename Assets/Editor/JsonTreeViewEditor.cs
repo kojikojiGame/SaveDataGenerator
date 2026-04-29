@@ -308,9 +308,36 @@ namespace SaveDataManagerSystem.View
                     () =>
                     {
                         if (token.Parent is JProperty p)
+                        {
+                            // 1. まず、削除対象の親が「配列の0番目の要素（JObject）」かどうかを確認
+                            // path の例: Root.MyArray[0].MyProperty
+                            var parentObject = p.Parent as JObject;
+                            var grandParentArray = parentObject?.Parent as JArray;
+
+                            // 0番目の要素内のプロパティが削除されようとしている場合
+                            if (grandParentArray != null && grandParentArray.IndexOf(parentObject) == 0)
+                            {
+                                string propertyName = p.Name;
+
+                                // 要素1以降のすべてのJObjectから、同じ名前のプロパティを削除
+                                for (int i = 1; i < grandParentArray.Count; i++)
+                                {
+                                    if (grandParentArray[i] is JObject targetObj)
+                                    {
+                                        targetObj.Property(propertyName)?.Remove();
+                                    }
+                                }
+                            }
+
+                            // 2. 本人（0番目のプロパティ）を削除
                             p.Remove();
+                        }
                         else
+                        {
+                            // 通常の削除
                             token.Remove();
+                        }
+
                         UpdateOriginalJson();
                         RefreshTree();
                     })
