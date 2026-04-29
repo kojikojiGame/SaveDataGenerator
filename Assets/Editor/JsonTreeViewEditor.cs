@@ -274,9 +274,26 @@ namespace SaveDataManagerSystem.View
                     () =>
                     {
                         if (obj != null)
-                            obj.Add(MakeUniqueName(obj, "NewKey"), "");
-                        else
-                            arr.Add("");
+                        {
+                            // オブジェクトへの追加（前回の回答通り）
+                            string baseName = (token is JProperty p) ? p.Name : "NewKey";
+                            obj.Add(MakeUniqueName(obj, baseName), "");
+                        }
+                        else if (arr != null)
+                        {
+                            // --- 修正箇所：配列への追加 ---
+                            if (arr.Count > 0)
+                            {
+                                // 0番目の要素が存在すれば、それを複製して追加
+                                arr.Add(arr[0].DeepClone());
+                            }
+                            else
+                            {
+                                // 配列が空ならデフォルトとして空文字（または適切な初期値）を追加
+                                arr.Add("");
+                            }
+                            // ----------------------------
+                        }
                         UpdateOriginalJson();
                         RefreshTree();
                     })
@@ -307,20 +324,17 @@ namespace SaveDataManagerSystem.View
 
         private string MakeUniqueName(JObject obj, string candidate, int? count = null)
         {
-            var isContainsKey = count == null
-                ? obj.ContainsKey($"{candidate}")
-                : obj.ContainsKey($"{candidate}{count}");
+            string suffix = count == null ? "" : count.ToString();
+            string candidateName = $"{candidate}{suffix}";
 
-            var candidateName = count == null ? $"{candidate}" : $"{candidate}{count}";
-
-            if (isContainsKey)
+            if (obj.ContainsKey(candidateName))
             {
-                candidateName = MakeUniqueName(obj, candidateName, count++ ?? 0);
+                // 次の数値を試す
+                return MakeUniqueName(obj, candidate, (count ?? 0) + 1);
             }
 
             return candidateName;
         }
-
         void UpdateOriginalJson()
         {
             serializedObject.Update();
