@@ -48,7 +48,81 @@ namespace SaveDataManagerSystem.View
             root.Add(new Button(RefreshTree) { text = "Edit", style = { height = 30, marginTop = 10 } });
             root.Add(_treeContainer);
             root.Add(new Button(jsonTreeView.OnSave) { text = "Save", style = { height = 30, marginTop = 10 } });
+            root.Add(new Button(() => OnDeprecate()) { text = "Deprecate", style = { height = 30, marginTop = 10 } });
             return root;
+        }
+
+        private void OnDeprecate()
+        {
+            if (_rootJToken is null)
+            {
+                RefreshTree();
+            }
+
+            if (_rootJToken is JObject jobject)
+            {
+                // すべてのキーをリストで取得
+                var keys = jobject.Descendants()
+                    .Where(t => (t.Type == JTokenType.Object || t.Type == JTokenType.Array)
+                    && t.Parent is not JArray)
+                    .Select(x => x.Path).ToArray();
+
+                DeprecatedTreeSettingsDialog.ShowWindow(keys, Deprecate);
+            }
+        }
+
+        public void Deprecate(string path, int number)
+        {
+            if(number == 0)
+            {
+                Debug.LogError($"要素数が{number}です。");
+            }
+
+
+            if (_rootJToken is JObject jobject)
+            {
+                var property = jobject.Descendants()
+                    .OfType<JProperty>()
+                    .FirstOrDefault(t => t.Path == path);
+
+                if (property != null)
+                {
+                    // JProperty の中身（Value）が配列 (JArray) か確認
+                    if (property.Value is JArray jArray)
+                    {
+                        // 最初の要素をコピー元にする
+                        var firstItem = jArray.FirstOrDefault();
+                        if (firstItem != null)
+                        {
+                            if (jArray.Count < number)
+                            {
+                                for (int i = jArray.Count; i < number; i++)
+                                {
+                                    // 参照ではなく複製(DeepClone)を追加しないと同じ実体を指してしまう
+                                    jArray.Add(firstItem.DeepClone());
+                                }
+                            }
+                            else
+                            {
+                                var dist = jArray.Count - number;
+
+                                for (int i =  0; i < dist; i++)
+                                {
+                                    jArray.Last.Remove();
+                                }
+                            }
+                        }
+                    }
+
+                    UpdateOriginalJson();
+                    RefreshTree();
+                }
+                else
+                {
+                    Debug.LogError($"{path}が見つかりません。");
+                }
+            }
+
         }
 
         void RefreshTree()
