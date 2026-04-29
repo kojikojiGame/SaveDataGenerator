@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27da34db9ffb5b0488d49fbf2b855e3a, type: 3}
+  m_Name: DT_PlayerMoneyRecordMaster
+  m_EditorClassIdentifier: Assembly-CSharp::STDB_PlayerMoneyRecordMaster
+  datas:
+  - Id: 1
+    TextKeyName: PlayerMnyRc_WaterBill
+  - Id: 2
+    TextKeyName: PlayerMnyRc_ElectricityBill
+  - Id: 3
+    TextKeyName: PlayerMnyRc_GasBill
+  - Id: 4
+    TextKeyName: PlayerMnyRc_FoodExpenses
+  - Id: 5
+    TextKeyName: PlayerMnyRc_PTalkUsageFees
+  - Id: 6
+    TextKeyName: PlayerMnyRc_PTalkSuperChatFees
+  - Id: 7
+    TextKeyName: PlayerMnyRc_SupportMoney
+  - Id: 8
+    TextKeyName: PlayerMnyRc_DatePayments
+  - Id: 9
+    TextKeyName: PlayerMnyRc_PurchasesOfConsumables
+  - Id: 10
+    TextKeyName: PlayerMnyRc_HighvalueTransactions
+  - Id: 11
+    TextKeyName: PlayerMnyRc_FacilityUse
+  - Id: 12
+    TextKeyName: PlayerMnyRc_LotteryTicketPurchases
+  - Id: 13
+    TextKeyName: PlayerMnyRc_SettlementFees

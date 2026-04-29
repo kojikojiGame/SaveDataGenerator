@@ -1,0 +1,5 @@
+Comment,Id,FullNameTextKey,AccountNameTextKey,FavorabilityOverTimeValue,StreamingSelectIconPath,StreamingLiveIconPath,MessageSelectIconPath,MessageTalkIconPath,StreamingScriptQuestionIdle1Path,StreamingScriptQuestionIdle2Path,StreamingScriptFinishPath
+姉咲 舞華,1,Heroine_01_FullName,Heroine_01_AccountName,10,T_UI_Icon_H01_01_StreamingSelectIcon,T_UI_Icon_H01_02_StreamingLiveIcon,T_UI_Icon_H01_03_MessageSelectIcon,T_UI_Icon_H01_04_MessageTalkIcon,Streaming/DT_H01_Qs01,Streaming/DT_H01_Qs02,Streaming/DT_H01_Fn01
+志食 日葵,2,Heroine_02_FullName,Heroine_02_AccountName,10,T_UI_Icon_H02_01_StreamingSelectIcon,-,-,-,-,-,-
+静 美桜,3,Heroine_03_FullName,Heroine_03_AccountName,10,T_UI_Icon_H03_01_StreamingSelectIcon,-,-,-,-,-,-
+好永 明詩愛,4,Heroine_04_FullName,Heroine_04_AccountName,10,-,-,-,-,-,-,-

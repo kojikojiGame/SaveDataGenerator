@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f3f78d65de53a64b85a0053faa83e31, type: 3}
+  m_Name: DT_HeroineMaster
+  m_EditorClassIdentifier: Assembly-CSharp::STDB_HeroineMaster
+  datas:
+  - Id: 1
+    FullNameTextKey: Heroine_01_FullName
+    AccountNameTextKey: Heroine_01_AccountName
+    FavorabilityOverTimeValue: 10
+    StreamingSelectIconPath: T_UI_Icon_H01_01_StreamingSelectIcon
+    StreamingLiveIconPath: T_UI_Icon_H01_02_StreamingLiveIcon
+    MessageSelectIconPath: T_UI_Icon_H01_03_MessageSelectIcon
+    MessageTalkIconPath: T_UI_Icon_H01_04_MessageTalkIcon
+    StreamingScriptQuestionIdle1Path: Streaming/DT_H01_Qs01
+    StreamingScriptQuestionIdle2Path: Streaming/DT_H01_Qs02
+    StreamingScriptFinishPath: Streaming/DT_H01_Fn01
+  - Id: 2
+    FullNameTextKey: Heroine_02_FullName
+    AccountNameTextKey: Heroine_02_AccountName
+    FavorabilityOverTimeValue: 10
+    StreamingSelectIconPath: T_UI_Icon_H02_01_StreamingSelectIcon
+    StreamingLiveIconPath: '-'
+    MessageSelectIconPath: '-'
+    MessageTalkIconPath: '-'
+    StreamingScriptQuestionIdle1Path: '-'
+    StreamingScriptQuestionIdle2Path: '-'
+    StreamingScriptFinishPath: '-'
+  - Id: 3
+    FullNameTextKey: Heroine_03_FullName
+    AccountNameTextKey: Heroine_03_AccountName
+    FavorabilityOverTimeValue: 10
+    StreamingSelectIconPath: T_UI_Icon_H03_01_StreamingSelectIcon
+    StreamingLiveIconPath: '-'
+    MessageSelectIconPath: '-'
+    MessageTalkIconPath: '-'
+    StreamingScriptQuestionIdle1Path: '-'
+    StreamingScriptQuestionIdle2Path: '-'
+    StreamingScriptFinishPath: '-'
+  - Id: 4
+    FullNameTextKey: Heroine_04_FullName
+    AccountNameTextKey: Heroine_04_AccountName
+    FavorabilityOverTimeValue: 10
+    StreamingSelectIconPath: '-'
+    StreamingLiveIconPath: '-'
+    MessageSelectIconPath: '-'
+    MessageTalkIconPath: '-'
+    StreamingScriptQuestionIdle1Path: '-'
+    StreamingScriptQuestionIdle2Path: '-'
+    StreamingScriptFinishPath: '-'
