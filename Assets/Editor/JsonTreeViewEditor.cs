@@ -188,9 +188,9 @@ namespace SaveDataManagerSystem.View
                 else
                 {
                     var valueField = new TextField { value = token.ToString(), style = { flexGrow = 1, marginRight = 5 } };
-                    valueField.RegisterValueChangedCallback(evt =>
+                    valueField.RegisterCallback<FocusOutEvent>(evt =>
                     {
-                        if (TryUpdateValue(token, evt.newValue))
+                        if (TryUpdateValue(token, valueField.value))
                             UpdateOriginalJson();
                     });
                     row.Add(valueField);
@@ -218,13 +218,31 @@ namespace SaveDataManagerSystem.View
         // --- 以下、補助メソッド (以前と同様) ---
         VisualElement CreateKeyElement(JToken token, string name)
         {
-            if (token.Parent is JProperty prop)
+            // 配列の要素（[0], [1]など）は名前変更できないように制限
+            bool isArrayItem = token.Parent is JArray;
+
+            if (isArrayItem)
             {
-                var f = new TextField { value = name, style = { width = KeyWidth, marginRight = 5 } };
-                f.RegisterValueChangedCallback(evt => { RenameProperty(prop, evt.newValue); UpdateOriginalJson(); RefreshTree(); });
-                return f;
+                return new Label(name) { style = { width = KeyWidth, unityTextAlign = TextAnchor.MiddleLeft } };
             }
-            return new Label(name) { style = { width = KeyWidth, marginRight = 5, unityFontStyleAndWeight = FontStyle.Bold } };
+            else
+            {
+                var keyField = new TextField { value = name, style = { width = KeyWidth } };
+
+                // 入力完了時に名前を付け替える
+                keyField.RegisterCallback<FocusOutEvent>(evt =>
+                {
+                    string newName = keyField.value;
+                    if (name != newName && !string.IsNullOrEmpty(newName))
+                    {
+                        RenameProperty(token, newName);
+                        UpdateOriginalJson();
+                        RefreshTree(); // 構造が変わるため再描画が必要
+                    }
+                });
+
+                return keyField;
+            }
         }
 
         bool TryUpdateValue(JToken token, string val)
@@ -257,13 +275,25 @@ namespace SaveDataManagerSystem.View
             }
         }
 
-        void RenameProperty(JProperty property, string newName)
+        void RenameProperty(JToken token, string newName)
         {
-            if (string.IsNullOrEmpty(newName) || property.Name == newName) return;
-            JObject parent = (JObject)property.Parent;
-            if (parent == null || parent.ContainsKey(newName)) return;
-            property.AddAfterSelf(new JProperty(newName, property.Value));
-            property.Remove();
+            // JTokenの親がJPropertyであることを確認（JObject直下の場合）
+            if (token.Parent is JProperty property)
+            {
+                var parentObject = property.Parent as JObject;
+                if (parentObject != null)
+                {
+                    // すでに同名のキーがある場合は実行しない（上書き防止）
+                    if (parentObject.ContainsKey(newName))
+                    {
+                        Debug.LogWarning($"Key '{newName}' already exists.");
+                        return;
+                    }
+
+                    // 新しい名前でプロパティを追加し、古いものを消す
+                    property.Replace(new JProperty(newName, property.Value));
+                }
+            }
         }
 
         void AddControlButtons(VisualElement row, JToken token, JObject obj = null, JArray arr = null)
