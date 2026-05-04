@@ -85,7 +85,7 @@ public class SDMS_UnitTest : MonoBehaviour
         var slotDataList = _saveData.GameData.SlotData.ToList();
 
         var newSlot = new Slotdata();        
-        newSlot.SlotID = "-1";
+        //newSlot.SlotID = "-1";
 
         var playerData = new Playerdata();
         playerData.Turn = "-1";
@@ -95,7 +95,7 @@ public class SDMS_UnitTest : MonoBehaviour
         var heroineList = new List<Heroinedata>();
 
         var heroineData = new Heroinedata();
-        heroineData.Name = "Hanako";
+        //heroineData.Name = "Hanako";
         heroineList.Add(heroineData);
 
         newSlot.HeroineData = heroineList.ToArray();

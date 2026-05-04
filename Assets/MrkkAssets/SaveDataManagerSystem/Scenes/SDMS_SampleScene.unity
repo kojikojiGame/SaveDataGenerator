@@ -398,18 +398,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87cd554fa81a75b4bb6d95cdd3f96501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JsonTreeView
-  _filePath: D:\workspace\Program\Unity\SaveDataTest\Assets\SaveDataManagerSystem\SampleSaveData\sample.json
-  _bindingMasterDataFilePath: D:\workspace\Program\Unity\SaveDataTest\Assets\SaveDataManagerSystem\SampleSaveData\bindData.json
-  jsonInput: "{\r\n  \"SystemData\": {\r\n    \"PlayerName\": \"hoge\",\r\n    \"Volume\":
-    \"10\",\r\n    \"DisplaySize\": {\r\n      \"X\": \"1920\",\r\n      \"Y\": \"1080\"\r\n   
-    }\r\n  },\r\n  \"GameData\": {\r\n    \"SlotData\": [\r\n      {\r\n        \"SlotID\":
-    \"Slot1\",\r\n        \"PlayerData\": {\r\n          \"Turn\": \"0\",\r\n         
-    \"Money\": \"100\"\r\n        },\r\n        \"HeroineData\": [\r\n          {\r\n           
-    \"Name\": \"Heroine1\"\r\n          },\r\n          {\r\n            \"Name\":
-    \"Heroine2\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"SlotID\":
-    \"Slot2\",\r\n        \"PlayerData\": {\r\n          \"Turn\": \"0\",\r\n         
-    \"Money\": \"100\"\r\n        },\r\n        \"HeroineData\": [\r\n          {\r\n           
-    \"Name\": \"Heroine1\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}"
+  _filePath: E:\Unity\SaveDataGenerator\Assets\MrkkAssets\SaveDataManagerSystem\SaveData\save.json
+  _bindingMasterDataFilePath: E:\Unity\SaveDataGenerator\Assets\MrkkAssets\SaveDataManagerSystem\SaveData\bindData.json
+  jsonInput: "{\r\n  \"SystemData\": {\r\n    \"PlayerName\": \"\u30D1\u30D1\",\r\n   
+    \"AudioVolume\": \"10\",\r\n    \"DisplaySize\": 0\r\n  },\r\n  \"GameData\":
+    {\r\n    \"SlotData\": [\r\n      {\r\n        \"PlayingTurn\": 0,\r\n       
+    \"PlayerData\": {\r\n          \"Turn\": \"0\",\r\n          \"Money\": \"100\",\r\n         
+    \"Items\": [\r\n            0,\r\n            0,\r\n            0\r\n         
+    ],\r\n          \"ShopBuyCount\": [\r\n            0,\r\n            0,\r\n           
+    0\r\n          ],\r\n          \"ActionLog\": 0,\r\n          \"MoneyRecord\":
+    [\r\n            0,\r\n            0,\r\n            0\r\n          ],\r\n         
+    \"ThisWeekBuyLotteryNumbers\": [\r\n            0,\r\n            0,\r\n           
+    0,\r\n            0,\r\n            0,\r\n            0\r\n          ],\r\n         
+    \"LastWeekBuyLotteryNumbers\": [\r\n            0,\r\n            0,\r\n           
+    0,\r\n            0,\r\n            0,\r\n            0\r\n          ],\r\n         
+    \"DateTurn\": 0,\r\n          \"EventFlg\": [\r\n            false\r\n         
+    ]\r\n        },\r\n        \"HeroineData\": [\r\n          {\r\n            \"RelationShip\":
+    0,\r\n            \"Likeability\": 0,\r\n            \"SupportMoney\": 0,\r\n           
+    \"PregnancyStatus\": 0,\r\n            \"ConfinementTurn\": 0,\r\n           
+    \"FertilizationTurn\": 0,\r\n            \"NoRelationshipCount\": 0,\r\n           
+    \"AskedQuestionFlg\": [\r\n              false,\r\n              false,\r\n             
+    false\r\n            ],\r\n            \"MessageActionButtonFlg\": [\r\n             
+    false,\r\n              false,\r\n              false\r\n            ]\r\n         
+    }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}"
   viewModelDataContext: {fileID: 1619578730}
 --- !u!114 &1619578730
 MonoBehaviour:

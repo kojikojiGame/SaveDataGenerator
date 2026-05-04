@@ -1,0 +1,120 @@
+{
+  "SystemData": {
+    "PlayerName": "パパ",
+    "AudioVolume": "10",
+    "DisplaySize": 0
+  },
+  "GameData": {
+    "PlayingTurn": 0,
+    "SlotData": [
+      {
+        "PlayerData": {
+          "Turn": 0,
+          "Money": 100,
+          "Items": [
+            0,
+            0,
+            0
+          ],
+          "ShopBuyCount": [
+            0,
+            0,
+            0
+          ],
+          "ActionLog": 0,
+          "MoneyRecord": [
+            0,
+            0,
+            0
+          ],
+          "ThisWeekBuyLotteryNumbers": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "LastWeekBuyLotteryNumbers": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "DateTurn": 0,
+          "EventFlg": [
+            false
+          ]
+        },
+        "HeroineData": [
+          {
+            "RelationShip": 0,
+            "Likeability": 0,
+            "SupportMoney": 0,
+            "PregnancyStatus": 0,
+            "ConfinementTurn": 0,
+            "FertilizationTurn": 0,
+            "NoRelationshipCount": 0,
+            "AskedQuestionFlg": [
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false
+            ],
+            "MessageActionButtonFlg": [
+              false,
+              false,
+              false
+            ],
+            "MessagePastLog": [
+              ""
+            ],
+            "MessagePlayLog": [
+              ""
+            ],
+            "MessagePlayIndex": 0
+          }
+        ]
+      }
+    ]
+  },
+  "TextReadData": {
+    "TextSystem": [
+      false
+    ],
+    "TextTalk": [
+      false
+    ]
+  }
+}
