@@ -215,34 +215,48 @@ namespace SaveDataManagerSystem.View
             token.Replace(newValue);
         }
 
-        // --- 以下、補助メソッド (以前と同様) ---
         VisualElement CreateKeyElement(JToken token, string name)
         {
-            // 配列の要素（[0], [1]など）は名前変更できないように制限
-            bool isArrayItem = token.Parent is JArray;
+            // 配列のインデックス（[0]など）は編集不可、JPropertyのキーのみ編集可能にする
+            bool isProperty = token.Parent is JProperty;
+            var keyField = new TextField { value = name, style = { width = KeyWidth, marginRight = 5 } };
+            keyField.SetEnabled(isProperty);
 
-            if (isArrayItem)
+            if (isProperty)
             {
-                return new Label(name) { style = { width = KeyWidth, unityTextAlign = TextAnchor.MiddleLeft } };
-            }
-            else
-            {
-                var keyField = new TextField { value = name, style = { width = KeyWidth } };
-
-                // 入力完了時に名前を付け替える
                 keyField.RegisterCallback<FocusOutEvent>(evt =>
                 {
                     string newName = keyField.value;
-                    if (name != newName && !string.IsNullOrEmpty(newName))
+                    if (name == newName) return;
+
+                    var property = (JProperty)token.Parent;
+                    var parentObj = property.Parent as JObject;
+
+                    if (parentObj != null)
                     {
-                        RenameProperty(token, newName);
+                        // 1. まず自分自身の名前を変更
+                        RenameProperty(property, newName);
+
+                        // 2. 「配列の0番目の要素」のプロパティが変更されたかチェック
+                        if (parentObj.Parent is JArray jArray && jArray.First == parentObj)
+                        {
+                            // 他のすべての要素（1番目以降）に対しても同じ名前変更を適用
+                            foreach (var item in jArray.Skip(1).OfType<JObject>())
+                            {
+                                var targetProp = item.Property(name); // 旧名のプロパティを探す
+                                if (targetProp != null)
+                                {
+                                    RenameProperty(targetProp, newName);
+                                }
+                            }
+                        }
+
                         UpdateOriginalJson();
-                        RefreshTree(); // 構造が変わるため再描画が必要
+                        RefreshTree(); // 構造が変わるためリフレッシュ
                     }
                 });
-
-                return keyField;
             }
+            return keyField;
         }
 
         bool TryUpdateValue(JToken token, string val)
@@ -275,25 +289,15 @@ namespace SaveDataManagerSystem.View
             }
         }
 
-        void RenameProperty(JToken token, string newName)
+        void RenameProperty(JProperty property, string newName)
         {
-            // JTokenの親がJPropertyであることを確認（JObject直下の場合）
-            if (token.Parent is JProperty property)
-            {
-                var parentObject = property.Parent as JObject;
-                if (parentObject != null)
-                {
-                    // すでに同名のキーがある場合は実行しない（上書き防止）
-                    if (parentObject.ContainsKey(newName))
-                    {
-                        Debug.LogWarning($"Key '{newName}' already exists.");
-                        return;
-                    }
+            var parent = property.Parent as JObject;
+            if (parent == null) return;
 
-                    // 新しい名前でプロパティを追加し、古いものを消す
-                    property.Replace(new JProperty(newName, property.Value));
-                }
-            }
+            // Newtonsoft.Json では Property の Name は直接書き換えられないため、
+            // 新しい名前で作り直して置き換える必要がある
+            var newProp = new JProperty(newName, property.Value);
+            property.Replace(newProp);
         }
 
         void AddControlButtons(VisualElement row, JToken token, JObject obj = null, JArray arr = null)
@@ -307,7 +311,7 @@ namespace SaveDataManagerSystem.View
                         {
                             // オブジェクトへの追加（前回の回答通り）
                             string baseName = (token is JProperty p) ? p.Name : "NewKey";
-                            obj.Add(MakeUniqueName(obj, baseName), "");
+                            AddChild(token, MakeUniqueName(obj, baseName));
                         }
                         else if (arr != null)
                         {
@@ -379,6 +383,38 @@ namespace SaveDataManagerSystem.View
 
         }
 
+        private void AddChild(JToken token, string keyName)
+        {
+            if (token is JObject obj)
+            {
+                // 1. 新しいプロパティ（要素）を作成
+                var newPropName = keyName;
+                var newValue = new JValue("");
+                obj.Add(newPropName, newValue);
+
+                // --- 同期ロジック開始 ---
+                // このオブジェクトが「JArrayの0番目の要素」であるか確認
+                if (obj.Parent is JArray parentArray && parentArray.First == obj)
+                {
+                    // 1番目以降のすべてのオブジェクトに対して、同じプロパティを追加
+                    for (int i = 1; i < parentArray.Count; i++)
+                    {
+                        if (parentArray[i] is JObject targetObj)
+                        {
+                            // 既に同名のキーがない場合のみ追加（DeepCloneで実体を分ける）
+                            if (targetObj.Property(newPropName) == null)
+                            {
+                                targetObj.Add(newPropName, newValue.DeepClone());
+                            }
+                        }
+                    }
+                }
+                // --- 同期ロジック終了 ---
+
+                UpdateOriginalJson();
+                RefreshTree();
+            }
+        }
         private string MakeUniqueName(JObject obj, string candidate, int? count = null)
         {
             string suffix = count == null ? "" : count.ToString();
