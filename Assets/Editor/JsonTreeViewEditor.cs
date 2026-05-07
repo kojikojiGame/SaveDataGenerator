@@ -307,7 +307,7 @@ namespace SaveDataManagerSystem.View
                         {
                             // オブジェクトへの追加（前回の回答通り）
                             string baseName = (token is JProperty p) ? p.Name : "NewKey";
-                            obj.Add(MakeUniqueName(obj, baseName), "");
+                            AddChild(token, MakeUniqueName(obj, baseName));
                         }
                         else if (arr != null)
                         {
@@ -379,6 +379,38 @@ namespace SaveDataManagerSystem.View
 
         }
 
+        private void AddChild(JToken token, string keyName)
+        {
+            if (token is JObject obj)
+            {
+                // 1. 新しいプロパティ（要素）を作成
+                var newPropName = keyName;
+                var newValue = new JValue("");
+                obj.Add(newPropName, newValue);
+
+                // --- 同期ロジック開始 ---
+                // このオブジェクトが「JArrayの0番目の要素」であるか確認
+                if (obj.Parent is JArray parentArray && parentArray.First == obj)
+                {
+                    // 1番目以降のすべてのオブジェクトに対して、同じプロパティを追加
+                    for (int i = 1; i < parentArray.Count; i++)
+                    {
+                        if (parentArray[i] is JObject targetObj)
+                        {
+                            // 既に同名のキーがない場合のみ追加（DeepCloneで実体を分ける）
+                            if (targetObj.Property(newPropName) == null)
+                            {
+                                targetObj.Add(newPropName, newValue.DeepClone());
+                            }
+                        }
+                    }
+                }
+                // --- 同期ロジック終了 ---
+
+                UpdateOriginalJson();
+                RefreshTree();
+            }
+        }
         private string MakeUniqueName(JObject obj, string candidate, int? count = null)
         {
             string suffix = count == null ? "" : count.ToString();
